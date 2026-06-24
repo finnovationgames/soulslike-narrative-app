@@ -15,6 +15,13 @@ const DEFAULTS = {
   vaultBranch: "main",
 };
 
+// Core cast + common NPCs, always offered in the speaker picker even if custom_cast.json
+// isn't in the repo. Merged with cast/dialogue/quest-derived names at runtime.
+const BUILTIN_CAST = [
+  "Narrator", "Maren", "Florian", "Drevok", "Vaelen", "Vorrin Coffer",
+  "Sister Ysolde", "Kopmter Coffer", "Duergar", "Quartz-Mother",
+];
+
 export const store = {
   settings: { ...DEFAULTS },
 
@@ -120,6 +127,18 @@ export const store = {
     for (const c of this.cast.list || []) {
       if (c && c.name) set.add(c.name);
     }
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  },
+
+  /** Full character roster for the speaker picker: builtin cast + cast file + every
+   *  speaker used in loaded dialogues + every NPC named on a quest. */
+  knownCharacters() {
+    const set = new Set(BUILTIN_CAST);
+    for (const { tree } of this.trees.values()) {
+      for (const node of Object.values(tree.nodes || {})) if (node.speaker) set.add(node.speaker);
+    }
+    for (const c of this.cast.list || []) { const n = c && (c.name || c.display_name); if (n) set.add(n); }
+    for (const q of this.quests.list || []) for (const n of (q.npcs || [])) if (n) set.add(n);
     return Array.from(set).sort((a, b) => a.localeCompare(b));
   },
 };

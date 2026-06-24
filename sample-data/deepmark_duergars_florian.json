@@ -5,21 +5,38 @@
 	"status": "semi-final",
 	"npcs": ["Florian", "Duergar", "Drevok", "Kopmter Coffer"],
 	"tags": ["Deepmark", "Duergar/Coffer"],
+	"stage": {
+		"map_type": "cave",
+		"ambient_light": 0,
+		"actors": [
+			{"id": "florian", "name": "Florian", "kind": "party", "cast_id": "florian", "portrait_id": "florian"},
+			{"id": "drevok", "name": "Drevok", "kind": "party", "cast_id": "drevok", "portrait_id": "drevok"},
+			{"id": "duergar", "name": "Duergar", "kind": "foe", "enemy_id": "duergar_miner", "portrait_id": "duergar", "hex": [6, 4]},
+			{"id": "kopmter", "name": "Kopmter Coffer", "kind": "foe", "enemy_id": "duergar_captain", "portrait_id": "kopmter", "hex": [7, 5]}
+		]
+	},
 	"start_node": "intro",
 	"nodes": {
 		"intro": {
 			"speaker": "Narrator",
 			"text": "The tunnel opens into a vaulted gallery, strange machines gnawing at veins of pale crystal. A voice calls out of the gloom as the miners notice you.",
+			"stage": [{"do": "camera", "focus": "duergar"}, {"do": "wait", "time": 0.4}],
 			"next_node": "d1"
 		},
 		"d1": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "surprised",
 			"text": "Oi! What are you doing here? This ain't the kind of place to be sniffing around...",
+			"stage": [{"do": "emote", "actor": "duergar", "emote": "surprise"}],
 			"next_node": "f1"
 		},
 		"f1": {
 			"speaker": "Florian",
+			"actor": "florian",
+			"emotion": "happy",
 			"text": "Ah! A person — what a relief! What's all this machinery? You're making such a racket!",
+			"stage": [{"do": "move", "actor": "florian", "to": [4, 4]}, {"do": "face", "actor": "florian", "toward": "duergar"}],
 			"next_node": "d2"
 		},
 		"d2": {
@@ -56,6 +73,8 @@
 		},
 		"d_bow": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "afraid",
 			"text": "(stepping back) Our apologies, your majesty. We didn't know the crown of flowers — we'd thought Bouquet lost to the flames.",
 			"next_node": "f_frag"
 		},
@@ -81,16 +100,23 @@
 		},
 		"f_interrupt": {
 			"speaker": "Florian",
+			"actor": "florian",
+			"emotion": "surprised",
 			"text": "Wait — you're Duergars! I thought you extinct. Your people fought for my ancestors.",
 			"next_node": "k_proud"
 		},
 		"k_proud": {
 			"speaker": "Kopmter Coffer",
+			"actor": "kopmter",
+			"emotion": "happy",
 			"text": "Ha! That we did. My great-grandfather, rest him, fought for Thorne and forged half the blades that held the walls.",
+			"stage": [{"do": "camera", "focus": "kopmter"}],
 			"next_node": "f_accord"
 		},
 		"f_accord": {
 			"speaker": "Florian",
+			"actor": "florian",
+			"emotion": "determined",
 			"text": "Then I honour your lineage's courage, Kopmter. Let us find a middle path — we were allies once; it would shame both our houses to come to blows.",
 			"next_node": "f_plea"
 		},

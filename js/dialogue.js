@@ -7,8 +7,10 @@ import { ConflictError } from "./github.js";
 import { validateTree } from "./validate.js";
 import { REGIONS, STATUSES, STATUS_BADGE } from "./quests.js";
 
-const MANAGED = new Set(["speaker", "text", "next_node", "choices", "note"]);
+const MANAGED = new Set(["speaker", "text", "next_node", "choices", "note", "emotion"]);
 const ADV_NUM = new Set(["timer", "timeout_choice"]);
+// The 12 game emotions (neutral = default/unset). Sets node.emotion → picks the portrait.
+const EMOTIONS = ["happy", "sad", "angry", "afraid", "disgusted", "surprised", "crying", "determined", "smug", "hurt", "thoughtful"];
 const ADV_KEYS = ["condition", "timer", "timeout_choice", "requires_trait", "skip_to"];
 
 // ── List view ────────────────────────────────────────────────
@@ -215,7 +217,7 @@ export function renderDialogueEditor(ctx, id) {
   function renderNodes() {
     clear(nodesHost);
     const ids = orderedNodeIds();
-    const speakers = ctx.store.knownSpeakers();
+    const speakers = ctx.store.knownCharacters();
     const dl = el("datalist", { id: "nf-speakers" }, speakers.map((s) => el("option", { value: s })));
     nodesHost.appendChild(dl);
     for (const nid of ids) nodesHost.appendChild(renderNode(nid));
@@ -252,9 +254,20 @@ export function renderDialogueEditor(ctx, id) {
     ]);
     card.appendChild(head);
 
-    const speaker = el("input", { class: "speaker-input", value: node.speaker || "", placeholder: "Speaker", list: "nf-speakers", autocapitalize: "words" });
+    const speaker = el("input", { class: "speaker-input grow", value: node.speaker || "", placeholder: "Speaker", list: "nf-speakers", autocapitalize: "words" });
     speaker.addEventListener("input", () => { node.speaker = speaker.value; markDirty(); });
-    card.appendChild(field("Speaker", speaker));
+    const pickChar = el("button", { class: "btn small", title: "Choose character", onclick: () => openPicker({
+      title: "Choose character",
+      items: ctx.store.knownCharacters().map((n) => ({ id: n, label: n })),
+      onPick: (n) => { node.speaker = n; speaker.value = n; markDirty(); },
+    }) }, "◉");
+    card.appendChild(field("Speaker", el("div", { class: "row" }, [speaker, pickChar])));
+
+    const emoSel = el("select", {});
+    emoSel.appendChild(el("option", { value: "", selected: !node.emotion || node.emotion === "neutral" }, "😐 neutral (default)"));
+    for (const e of EMOTIONS) emoSel.appendChild(el("option", { value: e, selected: node.emotion === e }, e));
+    emoSel.addEventListener("change", () => { if (emoSel.value) node.emotion = emoSel.value; else delete node.emotion; markDirty(); });
+    card.appendChild(field("Emotion", emoSel));
 
     const text = el("textarea", { placeholder: "What they say…", rows: "3" });
     text.value = node.text || "";
@@ -376,10 +389,11 @@ export function renderDialogueEditor(ctx, id) {
     const draw = () => {
       clear(host);
       for (const k of Object.keys(node).filter((x) => !MANAGED.has(x))) {
-        if (k === "pos") {
+        if (k === "pos" || (node[k] !== null && typeof node[k] === "object")) {
+          const desc = k === "pos" ? `[${node.pos}] — layout, set on desktop` : "structured (stage/choreography) — preserved, edit on desktop";
           host.appendChild(el("div", { class: "row" }, [
-            el("span", { class: "badge", text: "pos" }),
-            el("span", { class: "faint", style: "font-size:.78rem", text: `[${node.pos}] — layout, set on desktop` }),
+            el("span", { class: "badge", text: k }),
+            el("span", { class: "faint", style: "font-size:.78rem", text: desc }),
           ]));
           continue;
         }

@@ -5,21 +5,37 @@
 	"status": "semi-final",
 	"npcs": ["Maren", "Duergar", "Quartz-Mother"],
 	"tags": ["Deepmark", "Duergar/Coffer"],
+	"stage": {
+		"map_type": "cave",
+		"ambient_light": 0,
+		"actors": [
+			{"id": "maren", "name": "Maren", "kind": "party", "cast_id": "maren", "portrait_id": "maren"},
+			{"id": "duergar", "name": "Duergar", "kind": "foe", "enemy_id": "duergar_miner", "portrait_id": "duergar", "hex": [6, 4]},
+			{"id": "duergar2", "name": "Duergar", "kind": "foe", "enemy_id": "duergar_hunter", "portrait_id": "duergar", "hex": [7, 5]}
+		]
+	},
 	"start_node": "intro",
 	"nodes": {
 		"intro": {
 			"speaker": "Narrator",
 			"text": "The tunnel opens into a vaulted gallery. Strange machines crouch in the dark, gnawing at veins of pale crystal — and a voice trembles out of the gloom as the miners notice you.",
+			"stage": [{"do": "camera", "focus": "duergar"}, {"do": "wait", "time": 0.4}],
 			"next_node": "d1"
 		},
 		"d1": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "surprised",
 			"text": "Oi! What are you doing here? This ain't the kind of place to be sniffing around...",
+			"stage": [{"do": "emote", "actor": "duergar", "emote": "surprise"}],
 			"next_node": "m1"
 		},
 		"m1": {
 			"speaker": "Maren",
+			"actor": "maren",
+			"emotion": "determined",
 			"text": "Are you the source of all this noise? We've been sent to investigate.",
+			"stage": [{"do": "move", "actor": "maren", "to": [4, 4]}, {"do": "face", "actor": "maren", "toward": "duergar"}],
 			"next_node": "d2"
 		},
 		"d2": {
@@ -44,12 +60,15 @@
 		},
 		"d_extinct": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "smug",
 			"text": "Your mother is extinct.",
 			"next_node": "react_extinct"
 		},
 		"react_extinct": {
 			"speaker": "Narrator",
 			"text": "They take a step forward, hands tightening on their tools.",
+			"stage": [{"do": "move", "actor": "duergar", "to": [5, 4]}, {"do": "emote", "actor": "duergar", "emote": "stomp"}, {"do": "camera", "focus": "duergar"}],
 			"choices": [
 				{"label": "Get ready for combat", "effects": {"set_flag": "bb_fight_duergars"}, "next_node": "combat_intro"},
 				{"label": "Apologise and try to de-escalate", "next_node": "de1"}
@@ -76,6 +95,8 @@
 		},
 		"de4": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "disgusted",
 			"text": "This is the fastest way. That's not our problem.",
 			"next_node": "de5"
 		},
@@ -86,7 +107,10 @@
 		},
 		"de6": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "angry",
 			"text": "All of them. So sod off.",
+			"stage": [{"do": "emote", "actor": "duergar", "emote": "stomp"}],
 			"next_node": "join_branch"
 		},
 		"join_branch": {
@@ -99,6 +123,8 @@
 		},
 		"join_refuse": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "afraid",
 			"text": "Are you mad? We're not walking blind into those tunnels to fight the deadliest thing in the Deepmark. We don't even know where she is!",
 			"next_node": "join_refuse2"
 		},
@@ -133,6 +159,8 @@
 		},
 		"ig6": {
 			"speaker": "Duergar",
+			"actor": "duergar",
+			"emotion": "happy",
 			"text": "Of course! Grab a pickaxe and mine whatever crystals you find in the caves. Sooner we hit our tally, sooner we're gone. And let us know if you turn up any other nests.",
 			"choices": [
 				{"label": "Take the pickaxe", "effects": {"standing_duergar": "1", "give_item": "pickaxe", "set_flag": "bb_has_pickaxe"}, "next_node": "ig_inner"}
