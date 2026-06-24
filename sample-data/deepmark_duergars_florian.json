@@ -1,0 +1,167 @@
+{
+	"id": "deepmark_duergars_florian",
+	"name": "The Deepmark Miners — Florian",
+	"region": "Deepmark",
+	"status": "semi-final",
+	"npcs": ["Florian", "Duergar", "Drevok", "Kopmter Coffer"],
+	"tags": ["Deepmark", "Duergar/Coffer"],
+	"start_node": "intro",
+	"nodes": {
+		"intro": {
+			"speaker": "Narrator",
+			"text": "The tunnel opens into a vaulted gallery, strange machines gnawing at veins of pale crystal. A voice calls out of the gloom as the miners notice you.",
+			"next_node": "d1"
+		},
+		"d1": {
+			"speaker": "Duergar",
+			"text": "Oi! What are you doing here? This ain't the kind of place to be sniffing around...",
+			"next_node": "f1"
+		},
+		"f1": {
+			"speaker": "Florian",
+			"text": "Ah! A person — what a relief! What's all this machinery? You're making such a racket!",
+			"next_node": "d2"
+		},
+		"d2": {
+			"speaker": "Duergar",
+			"text": "This? Just a spot of mining. Shouldn't take more than a few weeks.",
+			"next_node": "f2"
+		},
+		"f2": {
+			"speaker": "Florian",
+			"text": "(darting between the machines, delighted) Wow! You built these? Incredible. I've never seen technology like it!",
+			"next_node": "d3"
+		},
+		"d3": {
+			"speaker": "Duergar",
+			"text": "Thank you, kid — (scoffs). That's my life's work, that is. This beauty can chew through a whole vein of Ironbark faster than a Pale Listener steals a mother. (turning to the others) You lot all right? Taking the boy somewhere safe, I hope?",
+			"next_node": "bark"
+		},
+		"bark": {
+			"speaker": "Drevok",
+			"text": "(snickering) Oh, we're minding him very closely. Mind you don't lose him down a shaft — he does wander.",
+			"requires_trait": "talkative",
+			"skip_to": "f_herald",
+			"next_node": "f_shush"
+		},
+		"f_shush": {
+			"speaker": "Florian",
+			"text": "Shut up!",
+			"next_node": "f_herald"
+		},
+		"f_herald": {
+			"speaker": "Florian",
+			"text": "Not quite! I am Florian, heir to Bouquet. We come on behalf of Elthiad's guild of adventurers: your operation has gravely upset the local beasts, and many have died for it.",
+			"next_node": "d_bow"
+		},
+		"d_bow": {
+			"speaker": "Duergar",
+			"text": "(stepping back) Our apologies, your majesty. We didn't know the crown of flowers — we'd thought Bouquet lost to the flames.",
+			"next_node": "f_frag"
+		},
+		"f_frag": {
+			"speaker": "Narrator",
+			"text": "Something in Florian's face falters at that — the proud herald, briefly fragile.",
+			"next_node": "d_explain"
+		},
+		"d_explain": {
+			"speaker": "Duergar",
+			"text": "These crystals are vital to our city. We can't simply stop without good reason.",
+			"next_node": "f_name"
+		},
+		"f_name": {
+			"speaker": "Florian",
+			"text": "I understand. You lead this work, I take it. What is your name?",
+			"next_node": "k_intro"
+		},
+		"k_intro": {
+			"speaker": "Kopmter Coffer",
+			"text": "Aye, that I do. Kopmter Coffer, head of the Coffer family, back in the deep halls of (PLACEHOLDER) —",
+			"next_node": "f_interrupt"
+		},
+		"f_interrupt": {
+			"speaker": "Florian",
+			"text": "Wait — you're Duergars! I thought you extinct. Your people fought for my ancestors.",
+			"next_node": "k_proud"
+		},
+		"k_proud": {
+			"speaker": "Kopmter Coffer",
+			"text": "Ha! That we did. My great-grandfather, rest him, fought for Thorne and forged half the blades that held the walls.",
+			"next_node": "f_accord"
+		},
+		"f_accord": {
+			"speaker": "Florian",
+			"text": "Then I honour your lineage's courage, Kopmter. Let us find a middle path — we were allies once; it would shame both our houses to come to blows.",
+			"next_node": "f_plea"
+		},
+		"f_plea": {
+			"speaker": "Florian",
+			"text": "You need these crystals; I won't stand in the way of that — truly, I'd love to learn more. But your methods endanger Elthiad. The Quartz-Mother has left her nest because of the noise.",
+			"next_node": "k_noise"
+		},
+		"k_noise": {
+			"speaker": "Kopmter Coffer",
+			"text": "We could only work quieter by giving up the machines — and that we won't. The noise is what keeps us safe down here.",
+			"next_node": "f_branch"
+		},
+		"f_branch": {
+			"speaker": "Florian",
+			"text": "(to himself) That's fair. I'd not put them in danger either...",
+			"choices": [
+				{"label": "I know a spell that could help — though it is costly to maintain.", "effects": {"set_flag": "bb_silence_plan"}, "next_node": "opt1"},
+				{"label": "We could take down the Quartz-Mother together.", "effects": {"set_flag": "bb_hunt_quartz"}, "next_node": "opt2"},
+				{"label": "What if we found the Quartz-Mother a new home?", "effects": {"set_flag": "bb_relocate_plan"}, "next_node": "opt3"}
+			]
+		},
+		"opt1": {
+			"speaker": "Kopmter Coffer",
+			"text": "A warding to swallow the sound? Hah — we'd need the right components, and we've none to spare here.",
+			"choices": [
+				{"label": "Then let me travel to your city to gather what's needed.", "effects": {"set_flag": "bb_seek_components"}, "next_node": "opt1_travel"},
+				{"label": "I'll keep it in mind for now.", "next_node": "f_branch"}
+			]
+		},
+		"opt1_travel": {
+			"speaker": "Kopmter Coffer",
+			"text": "...You'd do that? Aye — come to our halls, and we'll see you have what the rite needs. Bring it back, and the noise need never trouble your beasts again."
+		},
+		"opt2": {
+			"speaker": "Kopmter Coffer",
+			"text": "For you, your majesty — aye. We'll not wait on the captain's leave for the heir of Bouquet.",
+			"next_node": "opt2_plan"
+		},
+		"opt2_plan": {
+			"speaker": "Florian",
+			"text": "Then here's a thought: still the machines and lie in wait at the nest. With the noise gone, she'll come home — and we'll be ready.",
+			"choices": [
+				{"label": "Set the ambush at the nest.", "effects": {"set_flag": "bb_ambush_plan"}, "next_node": "opt2_ambush"},
+				{"label": "No — let's track her down instead.", "effects": {"set_flag": "bb_follower_hunter"}, "next_node": "opt2_hunter"}
+			]
+		},
+		"opt2_ambush": {
+			"speaker": "Kopmter Coffer",
+			"text": "A fine plan. Still the machines, and the dark will bring her to you."
+		},
+		"opt2_hunter": {
+			"speaker": "Kopmter Coffer",
+			"text": "Then take my best hunter — she knows every tunnel the beast walks. (One of the Duergars shoulders a heavy crossbow and falls in beside you.)"
+		},
+		"opt3": {
+			"speaker": "Kopmter Coffer",
+			"text": "Move her? Hah — and how would you herd six metres of furious quartz-hide across the Deepmark?",
+			"next_node": "opt3_how"
+		},
+		"opt3_how": {
+			"speaker": "Florian",
+			"text": "Leave that to me. A lure, perhaps — or a means to speak with her. Only point me to a nest that would suit her.",
+			"choices": [
+				{"label": "Ask where a new nest might lie.", "effects": {"set_flag": "bb_relocate_plan"}, "next_node": "opt3_nest"},
+				{"label": "Reconsider the other options.", "next_node": "f_branch"}
+			]
+		},
+		"opt3_nest": {
+			"speaker": "Kopmter Coffer",
+			"text": "There's old galleries to the deep east that'd hold her well enough. Lead her there, and we'll trouble each other no more."
+		}
+	}
+}

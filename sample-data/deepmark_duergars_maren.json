@@ -1,0 +1,164 @@
+{
+	"id": "deepmark_duergars_maren",
+	"name": "The Deepmark Miners — Maren",
+	"region": "Deepmark",
+	"status": "semi-final",
+	"npcs": ["Maren", "Duergar", "Quartz-Mother"],
+	"tags": ["Deepmark", "Duergar/Coffer"],
+	"start_node": "intro",
+	"nodes": {
+		"intro": {
+			"speaker": "Narrator",
+			"text": "The tunnel opens into a vaulted gallery. Strange machines crouch in the dark, gnawing at veins of pale crystal — and a voice trembles out of the gloom as the miners notice you.",
+			"next_node": "d1"
+		},
+		"d1": {
+			"speaker": "Duergar",
+			"text": "Oi! What are you doing here? This ain't the kind of place to be sniffing around...",
+			"next_node": "m1"
+		},
+		"m1": {
+			"speaker": "Maren",
+			"text": "Are you the source of all this noise? We've been sent to investigate.",
+			"next_node": "d2"
+		},
+		"d2": {
+			"speaker": "Duergar",
+			"text": "The hell we are. Is it bothering you? We didn't know we had neighbours.",
+			"next_node": "point"
+		},
+		"point": {
+			"speaker": "Narrator",
+			"text": "These are Duergars — a folk most believe died out an age ago. Do you point it out?",
+			"timer": 10.0,
+			"timeout_choice": 1,
+			"choices": [
+				{"label": "Mention that you thought they were extinct", "next_node": "x_extinct"},
+				{"label": "Ignore that they're Duergars and act normally", "next_node": "ig1"}
+			]
+		},
+		"x_extinct": {
+			"speaker": "Maren",
+			"text": "You're Duergars? Weren't you supposed to be extinct?!",
+			"next_node": "d_extinct"
+		},
+		"d_extinct": {
+			"speaker": "Duergar",
+			"text": "Your mother is extinct.",
+			"next_node": "react_extinct"
+		},
+		"react_extinct": {
+			"speaker": "Narrator",
+			"text": "They take a step forward, hands tightening on their tools.",
+			"choices": [
+				{"label": "Get ready for combat", "effects": {"set_flag": "bb_fight_duergars"}, "next_node": "combat_intro"},
+				{"label": "Apologise and try to de-escalate", "next_node": "de1"}
+			]
+		},
+		"combat_intro": {
+			"speaker": "Narrator",
+			"text": "The Duergars drop their picks for heavier iron. There will be no more talking."
+		},
+		"de1": {
+			"speaker": "Maren",
+			"text": "I'm sorry — I'm just excited. I've read so much about you! What are you all doing with this machinery? It's like nothing I've ever seen.",
+			"next_node": "de2"
+		},
+		"de2": {
+			"speaker": "Duergar",
+			"text": "You see these crystals? With them we can build a vehicle like the world's never seen — carry it all the way to the Crystalmen's hold out in the desert. (PLACEHOLDER) So. Are you with us, or against us?",
+			"next_node": "de3"
+		},
+		"de3": {
+			"speaker": "Maren",
+			"text": "That sounds remarkable. But is there truly no other way? Your noise has driven the Quartz-Mother from her nest — I counted a dozen bodies on my way in.",
+			"next_node": "de4"
+		},
+		"de4": {
+			"speaker": "Duergar",
+			"text": "This is the fastest way. That's not our problem.",
+			"next_node": "de5"
+		},
+		"de5": {
+			"speaker": "Maren",
+			"text": "All right. How many of these crystals do you need?",
+			"next_node": "de6"
+		},
+		"de6": {
+			"speaker": "Duergar",
+			"text": "All of them. So sod off.",
+			"next_node": "join_branch"
+		},
+		"join_branch": {
+			"speaker": "Narrator",
+			"text": "You wonder whether you could talk them into hunting the Quartz-Mother with you.",
+			"choices": [
+				{"label": "Ask them to join you in killing the Quartz-Mother", "effects": {"set_flag": "bb_seek_captain"}, "next_node": "join_refuse"},
+				{"label": "Maybe it's not the right time", "next_node": ""}
+			]
+		},
+		"join_refuse": {
+			"speaker": "Duergar",
+			"text": "Are you mad? We're not walking blind into those tunnels to fight the deadliest thing in the Deepmark. We don't even know where she is!",
+			"next_node": "join_refuse2"
+		},
+		"join_refuse2": {
+			"speaker": "Maren",
+			"text": "(to herself) Maybe I can convince them if I learn a little more first..."
+		},
+		"ig1": {
+			"speaker": "Maren",
+			"text": "You're doing real harm to the ecosystem down here. We found at least a dozen bodies on the way in.",
+			"next_node": "ig2"
+		},
+		"ig2": {
+			"speaker": "Duergar",
+			"text": "I fail to see how that's our concern.",
+			"next_node": "ig3"
+		},
+		"ig3": {
+			"speaker": "Maren",
+			"text": "What happens when the Quartz-Mother comes back to her nest? Wouldn't that be your concern?",
+			"next_node": "ig4"
+		},
+		"ig4": {
+			"speaker": "Duergar",
+			"text": "We'll be long gone by then. Doesn't take long to mine out a seam.",
+			"next_node": "ig5"
+		},
+		"ig5": {
+			"speaker": "Maren",
+			"text": "All right. Is there any way we could help you do it faster?",
+			"next_node": "ig6"
+		},
+		"ig6": {
+			"speaker": "Duergar",
+			"text": "Of course! Grab a pickaxe and mine whatever crystals you find in the caves. Sooner we hit our tally, sooner we're gone. And let us know if you turn up any other nests.",
+			"choices": [
+				{"label": "Take the pickaxe", "effects": {"standing_duergar": "1", "give_item": "pickaxe", "set_flag": "bb_has_pickaxe"}, "next_node": "ig_inner"}
+			]
+		},
+		"ig_inner": {
+			"speaker": "Maren",
+			"text": "(to herself) We'll still be in danger the whole time they're digging...",
+			"choices": [
+				{"label": "Ask them to help you bring down the Quartz-Mother", "effects": {"set_flag": "bb_seek_captain"}, "next_node": "ig_collab"},
+				{"label": "Don't push it", "next_node": ""}
+			]
+		},
+		"ig_collab": {
+			"speaker": "Maren",
+			"text": "That works. I'll keep an eye out for crystals. And — what if we brought down the Quartz-Mother together? She carries a dozen of these on her hide. It'd make us both happy.",
+			"next_node": "ig_collab2"
+		},
+		"ig_collab2": {
+			"speaker": "Duergar",
+			"text": "Hmm. (The Duergars glance at one another.)",
+			"next_node": "ig_collab3"
+		},
+		"ig_collab3": {
+			"speaker": "Duergar",
+			"text": "We'll think on it. Come back with some crystals — and with where she dens. Our captain will be here next you visit; you can put it to him then."
+		}
+	}
+}
