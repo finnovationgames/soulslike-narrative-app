@@ -5,8 +5,8 @@ const CACHE_KEY = "nf.cache";
 
 const DEFAULTS = {
   token: "",
-  owner: "",
-  repo: "",
+  owner: "finnovationgames",
+  repo: "soulslike-vault",
   branch: "main",
   prefix: "", // path prefix inside the repo, e.g. "" (root) or "data/"
   demo: false,
