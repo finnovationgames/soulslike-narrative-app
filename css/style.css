@@ -295,3 +295,29 @@ hr.sep { border: none; border-top: 1px solid var(--line); margin: 18px 0; }
 /* search snippets */
 .snippet { font-size: 0.8rem; color: var(--text-dim); line-height: 1.45; }
 .snippet mark, .md-preview mark { background: rgba(217, 164, 65, 0.32); color: var(--text); border-radius: 3px; padding: 0 2px; }
+
+/* ── Tree / branch view ────────────────────────────────────── */
+.tree-view { padding: 2px 0 48px; }
+.tree-row {
+  display: flex; align-items: baseline; gap: 7px;
+  padding: 7px 9px; margin: 3px 0; border-radius: 8px;
+  background: var(--panel); border-left: 2px solid var(--line-2);
+  cursor: pointer;
+}
+.tree-row:active { background: var(--panel-2); }
+.tree-row.start { border-left-color: var(--accent); }
+.tree-speaker { font-weight: 700; font-size: 0.84rem; white-space: nowrap; flex: 0 0 auto; max-width: 38%; overflow: hidden; text-overflow: ellipsis; }
+.tree-text { color: var(--text-dim); font-size: 0.84rem; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tree-branch { margin: 3px 0 3px 11px; padding-left: 11px; border-left: 2px solid var(--line); }
+.tree-branch-label {
+  display: inline-block; margin: 5px 0 2px;
+  background: var(--bg-2); border: 1px solid var(--line-2); color: var(--text-dim);
+  border-radius: 14px; padding: 3px 11px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+}
+.tree-branch-label.choice { border-color: var(--purple); color: var(--purple); }
+.tree-branch-label::after { content: " ▾"; opacity: 0.6; }
+.tree-branch.collapsed > .tree-branch-label::after { content: " ▸"; }
+.tree-branch.collapsed > .tree-branch-content { display: none; }
+.tree-leaf-end { color: var(--text-faint); font-size: 0.78rem; padding: 3px 9px; }
+.tree-ref { color: var(--accent-2); font-size: 0.8rem; padding: 5px 9px; margin: 2px 0; cursor: pointer; border-left: 2px dashed var(--line-2); border-radius: 0 8px 8px 0; }
+.tree-ref:active { background: var(--panel); }

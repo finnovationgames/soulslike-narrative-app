@@ -155,6 +155,7 @@ export function renderDialogueEditor(ctx, id) {
       sub: `${Object.keys(tree.nodes).length} nodes${dirty ? " · ● unsaved" : ""}`,
       back: "#/",
       actions: [
+        { label: "🌳", kind: "ghost small", onClick: () => ctx.go(`#/d/${encodeURIComponent(id)}/tree`) },
         { label: "🗺", kind: "ghost small", onClick: () => ctx.go(`#/d/${encodeURIComponent(id)}/map`) },
         { label: "⬇", kind: "ghost small", onClick: () => downloadText(`${id}.json`, toGodotJson(tree)) },
         { label: saving ? "Saving…" : (dirty ? "Save" : "Saved"), kind: dirty ? "primary small" : "ghost small", disabled: !dirty || saving, onClick: doSave },

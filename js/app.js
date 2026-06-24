@@ -4,6 +4,7 @@ import { gh, createGitHub } from "./github.js";
 import { el, clear, field, toast } from "./util.js";
 import { renderDialogueList, renderDialogueEditor } from "./dialogue.js";
 import { renderMap } from "./map.js";
+import { renderTree } from "./tree.js";
 import { renderQuestList, renderQuestEditor, reloadQuests } from "./quests.js";
 import { renderDocs, renderDocEditor } from "./docs.js";
 
@@ -90,6 +91,7 @@ function route(hash) {
     if (parts[0] === "docs") return renderHome("docs");
     if (parts[0] === "docfile") return renderDocEditor(ctx, ctx.docFilePath);
     if (parts[0] === "d" && parts[2] === "map") return renderMap(ctx, parts[1]);
+    if (parts[0] === "d" && parts[2] === "tree") return renderTree(ctx, parts[1]);
     if (parts[0] === "d") return renderDialogueEditor(ctx, parts[1]);
     return renderHome("dialogues");
   } catch (e) {

@@ -16,7 +16,10 @@ export function renderMap(ctx, id) {
     title: "🗺 " + (tree.name || tree.id),
     sub: "tap a node to edit it",
     back: `#/d/${encodeURIComponent(id)}`,
-    actions: [{ label: "Fit", kind: "ghost small", onClick: () => fit() }],
+    actions: [
+      { label: "🌳", kind: "ghost small", onClick: () => ctx.go(`#/d/${encodeURIComponent(id)}/tree`) },
+      { label: "Fit", kind: "ghost small", onClick: () => fit() },
+    ],
   });
 
   const pos = computeLayout(tree);

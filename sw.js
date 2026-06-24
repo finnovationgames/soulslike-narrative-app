@@ -1,6 +1,6 @@
 /* Narrative Forge service worker — offline app shell.
    GitHub API calls always go to the network (never cached). */
-const CACHE = "narrative-forge-v2";
+const CACHE = "narrative-forge-v3";
 const SHELL = [
   "./",
   "./index.html",
@@ -12,6 +12,7 @@ const SHELL = [
   "./js/github.js",
   "./js/dialogue.js",
   "./js/map.js",
+  "./js/tree.js",
   "./js/quests.js",
   "./js/docs.js",
   "./js/validate.js",
